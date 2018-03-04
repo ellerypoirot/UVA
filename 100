@@ -1,0 +1,103 @@
+import java.io.*;
+import java.util.*;
+
+class Main{
+  
+  public static void main(String arg[]) throws IOException{
+  	Main m = new Main();
+  }
+
+  public Main() throws IOException{
+  	//Scanner sc = new Scanner(System.in);
+  	String s = "";
+
+    /*
+
+    if(sc.hasNextLine()){
+      s = sc.nextLine();
+      String[] ss = s.split(" ");
+      if(ss.length == 2){
+        int ii = Integer.parseInt(ss[0]);
+        int ij = Integer.parseInt(ss[1]);
+        long i = ii;
+        long j = ij;
+        long max = countMax(i,j);
+        //System.out.println(max);
+        String out = i + " " + j + " " + max; 
+        System.out.println(out);
+      }
+    }
+    */
+
+    //ArrayList<String> als = new ArrayList<String>();
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    String line = br.readLine();
+
+  	//while (sc.hasNextLine()){
+  	//	s = sc.nextLine();
+    while (line != null){
+
+    //while ((s = sc.nextLine()) != EOF){
+  		//String[] ss = s.split(" ");
+      String REGEX_WHITESPACE = "\\s+";
+      String cleanLine = line.trim().replaceAll(REGEX_WHITESPACE, " ");
+      String[] ss = cleanLine.split(REGEX_WHITESPACE);
+  		if(ss.length == 2){
+  			int ii = Integer.parseInt(ss[0]);
+  			int ij = Integer.parseInt(ss[1]);
+  			long i = ii;
+  			long j = ij;
+  			long max = countMax(i,j);
+  			//System.out.println(max);
+  			//String out = i + " " + j + " " + max; 
+        String out = cleanLine+" "+max;
+  			//als.add(out);
+        System.out.println(out);
+        line = br.readLine();
+  		}
+  		else{
+  			break;
+  		}
+  	}
+  //	for(int i = 0; i < als.size(); i++){
+  //		System.out.println(als.get(i).toString());
+  //	}
+  }
+
+  public long countMax(long i,long j){
+  	if(i>j){
+  		long temp = j;
+  		j=i;
+  		i=temp;
+  	}
+
+  	long max = 0;
+
+  	for(long n = i; n <= j; n++){
+  		long count = countN(n);
+  		if(count>max){
+  			max=count;
+  		}
+  	}
+
+  	return max;
+  }
+
+  public long countN(long n){
+  	long count = 1;
+  	while (n>1){
+  		if(n%2 == 0){
+  			n /= 2;
+  		}
+  		else{
+  			n *= 3;
+        n++;
+  		}
+  		count++;
+  	}
+  	return count;
+  }
+}
+
