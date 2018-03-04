@@ -1,0 +1,126 @@
+import java.io.*;
+import java.util.*;
+import java.util.regex.*;
+
+class Main{
+
+	private int n = 0;  //the number of the filed
+	private BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+
+	public static void main(String[] args) throws IOException{
+		Main m = new Main();
+	}
+
+	public Main() throws IOException{
+		ArrayList al = new ArrayList();
+
+		String line = bf.readLine();
+
+		while(line!=null){
+			String REGEX_WHITESPACE = "\\s+";
+			String cleanLine = line.trim().replaceAll(REGEX_WHITESPACE, " ");
+			String[] ss = cleanLine.split(REGEX_WHITESPACE);//regular the intput
+
+			if(ss.length ==2){
+
+				int fm = Integer.parseInt(ss[0]);
+				int fn = Integer.parseInt(ss[1]);
+
+				//System.out.println(fm+" "+fn);
+
+				if((fm==0)&&(fn==0)){
+					//System.out.println("break");
+					break;
+				}
+
+				n++;
+
+				al.add(printfield(n,fm,fn));
+			}
+
+			line = bf.readLine();
+			//System.out.println("read" + line);
+		}
+
+		for(int i=0;i<al.size()-1;i++)
+			System.out.println((String)al.get(i));
+		System.out.print((String)al.get(al.size()-1));
+	}
+
+	private String printfield(int n, int fm, int fn) throws IOException{
+		//System.out.println(n+" "+fm+" "+fn);
+		
+		int out[][] = new int[fm+2][fn+2];
+
+		for(int i=0;i<=fm+1;i++){
+			for(int j=0;j<=fn+1;j++){
+				out[i][j] = 0;
+			}
+		}
+
+		//String line = bf.readLine();
+
+		for(int i=1;i<=fm;i++){
+			String line = bf.readLine();
+			//String REGEX_WHITESPACE = "\\s+";
+			//String cleanLine = line.trim().replaceAll(REGEX_WHITESPACE, " ");
+			//String[] ss = cleanLine.split(REGEX_WHITESPACE);
+
+			//for(j=1;j<=fn;j++){
+			//	if(ss[j-1].equals("*"));
+			//}
+
+			/* pattern cannot deal with resevered chars
+			Pattern p = Pattern.compile("*");
+			Matcher m = p.matcher(line);
+
+			while(m.find()){
+				int j = m.start();
+				j++;
+
+				out[i][j] = 100;
+
+				for(int ci=i-1;ci<=i+1;ci++){
+					for(int cj=j-1;cj<=j+1;cj++){
+						out[ci][cj]++;
+					}
+				}
+			}*/
+
+			for(int j=1;j<=fn;j++){
+				char c = line.charAt(j-1);
+				String sc = c+"";
+				if(sc.equals("*")){
+					out[i][j] = 100;
+
+					for(int ci=i-1;ci<=i+1;ci++){
+						for(int cj=j-1;cj<=j+1;cj++){
+							out[ci][cj]++;
+						}
+					}
+
+				}
+			}
+
+			//line = bf.readLine();
+
+		}
+
+		String outString = "";
+
+		outString+= ("Field #" + n + ":\n");
+
+		for(int i=1;i<=fm;i++){
+			for(int j=1;j<=fn;j++){
+				if(out[i][j]<100)
+					outString+= ""+out[i][j];
+				else
+					outString+="*";
+			}
+			outString+="\n";
+		}
+
+		return outString;
+
+	}
+}
