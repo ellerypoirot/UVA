@@ -46,8 +46,9 @@ class Main{
 		for(int i : cost)
 			sum+=i;
 
-		int avg = (int)Math.ceil((double)sum / cost.length);
+		double avgd = (double) sum / cost.length;
 		//System.out.println(sum+" avg" + avg);
+		int avg = Math.round(avgd);
 
 		int exchh = 0;
 		int exchl = 0;
